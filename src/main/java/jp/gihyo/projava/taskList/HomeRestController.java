@@ -35,7 +35,7 @@ public class HomeRestController {
     }
 
     @GetMapping("restlist")
-    String listitems() {
+    String listItems() {
         String result = taskItems.stream()
                 .map(TaskItem::toString)
                 .collect(Collectors.joining(", "));
