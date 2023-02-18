@@ -12,8 +12,7 @@ import java.util.UUID;
 
 @Controller
 public class HomeController {
-    record TaskItem(String id, String task, String deadline, boolean done) {
-    }
+    record TaskItem(String id, String task, String deadline, boolean done) {}
     private List<TaskItem> taskItems = new ArrayList<>();
 
     @RequestMapping(value = "/hello")
@@ -24,7 +23,7 @@ public class HomeController {
 
     @GetMapping("/list")
     String listItems(Model model) {
-        model.addAttribute("taskList, taskItems");
+        model.addAttribute("taskList", taskItems);
         return "home";
     }
 
@@ -36,6 +35,6 @@ public class HomeController {
         taskItems.add(item);
 
         // listItemsメゾッドのエンドポイントにリダイレクト
-        return "redirect:/list";
+        return "redirect:list";
     }
 }
