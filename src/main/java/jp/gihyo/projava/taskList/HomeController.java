@@ -13,7 +13,9 @@ import java.util.UUID;
 
 @Controller
 public class HomeController {
-    record TaskItem(String id, String task, String deadline, boolean done) {}
+    record TaskItem(String id, String task, String deadline, boolean done) {
+    }
+
     private List<TaskItem> taskItems = new ArrayList<>();
     private final TaskListDao dao;
 
@@ -31,8 +33,8 @@ public class HomeController {
     }
 
     @GetMapping("/add")
-    String addItem(@RequestParam("task")String task,
-                   @RequestParam("deadline")String deadline) {
+    String addItem(@RequestParam("task") String task,
+                   @RequestParam("deadline") String deadline) {
         String id = UUID.randomUUID().toString().substring(0, 8);
         TaskItem item = new TaskItem(id, task, deadline, false);
         // TaskListDaoのaddメゾッドを呼び出す（データベースを使用するように書き換えた）
@@ -45,5 +47,11 @@ public class HomeController {
     @Autowired
     HomeController(TaskListDao dao) {
         this.dao = dao;
+    }
+
+    @GetMapping("/delete")
+    String deleteItem(@RequestParam("id") String id) {
+        dao.delete(id);
+        return "redirect:/list";
     }
 }
